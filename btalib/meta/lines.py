@@ -286,17 +286,17 @@ def multifunc_op(name, parg=None, propertize=False):
                 trailprefix = pd.Series(np.nan, index=series.index[pidx:p2])
                 # Determine the actul seed value to use
                 if _seed == SEED_AVG:
-                    trailprefix[-1] = series[p1:p2].mean()
+                    trailprefix.iloc[-1] = series[p1:p2].mean()
                 elif _seed == SEED_LAST:
-                    trailprefix[-1] = series[pidx]
+                    trailprefix.iloc[-1] = series[pidx]
                 elif _seed == SEED_SUM:
-                    trailprefix[-1] = series[p1:p2].sum()
+                    trailprefix.iloc[-1] = series[p1:p2].sum()
                 elif _seed == SEED_NONE:
                     pass  # no seed wished ... do nothing
                 elif _seed == SEED_ZERO:
-                    trailprefix[-1] = 0.0
+                    trailprefix.iloc[-1] = 0.0
                 elif _seed == SEED_ZFILL:
-                    trailprefix[:] = 0.0
+                    trailprefix.iloc[:] = 0.0
 
                 # complete trailer: prefix (seed at end) + series vals to calc
                 trailer = pd.concat([trailprefix, series[p2:]])
