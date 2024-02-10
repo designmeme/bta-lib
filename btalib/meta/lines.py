@@ -299,7 +299,7 @@ def multifunc_op(name, parg=None, propertize=False):
                     trailprefix[:] = 0.0
 
                 # complete trailer: prefix (seed at end) + series vals to calc
-                trailer = trailprefix.append(series[p2:])
+                trailer = pd.concat([trailprefix, series[p2:]])
             else:
                 self._pearly = 0  # it will be checked in getattr
                 self._minidx = self._minperiod - 1
