@@ -284,22 +284,26 @@ def multifunc_op(name, parg=None, propertize=False):
                 self._minidx = pidx = p2 - 1  # beginning of result calculation
 
                 trailprefix = pd.Series(np.nan, index=series.index[pidx:p2])
-                # Determine the actul seed value to use
-                if _seed == SEED_AVG:
-                    trailprefix.iloc[-1] = series[p1:p2].mean()
-                elif _seed == SEED_LAST:
-                    trailprefix.iloc[-1] = series[pidx]
-                elif _seed == SEED_SUM:
-                    trailprefix.iloc[-1] = series[p1:p2].sum()
-                elif _seed == SEED_NONE:
-                    pass  # no seed wished ... do nothing
-                elif _seed == SEED_ZERO:
-                    trailprefix.iloc[-1] = 0.0
-                elif _seed == SEED_ZFILL:
-                    trailprefix.iloc[:] = 0.0
 
-                # complete trailer: prefix (seed at end) + series vals to calc
-                trailer = pd.concat([trailprefix, series[p2:]])
+                if len(trailprefix):  # empty series
+                    # Determine the actul seed value to use
+                    if _seed == SEED_AVG:
+                        trailprefix.iloc[-1] = series[p1:p2].mean()
+                    elif _seed == SEED_LAST:
+                        trailprefix.iloc[-1] = series[pidx]
+                    elif _seed == SEED_SUM:
+                        trailprefix.iloc[-1] = series[p1:p2].sum()
+                    elif _seed == SEED_NONE:
+                        pass  # no seed wished ... do nothing
+                    elif _seed == SEED_ZERO:
+                        trailprefix.iloc[-1] = 0.0
+                    elif _seed == SEED_ZFILL:
+                        trailprefix.iloc[:] = 0.0
+
+                    # complete trailer: prefix (seed at end) + series vals to calc
+                    trailer = pd.concat([trailprefix, series[p2:]])
+                else:
+                    trailer = trailprefix.copy()
             else:
                 self._pearly = 0  # it will be checked in getattr
                 self._minidx = self._minperiod - 1
