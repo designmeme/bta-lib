@@ -23,7 +23,7 @@ class truehigh(Indicator):
     '''
     group = 'volatility'
     alias = 'TR', 'TrueRange', 'trange', 'TRANGE'
-    inputs = 'low', 'close'
+    inputs = 'high', 'close'
     outputs = 'truehi'
     params = (
         ('_period', 1, 'Period to consider'),
